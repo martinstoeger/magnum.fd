@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to MicroMagnums documentation!
-======================================
+.. image:: /figures/logo.svg
 
-.. image:: figures/logo_magnum.png
+Welcome to magnum.fd' documentation!
+====================================
 
 Contents:
 
