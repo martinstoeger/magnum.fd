@@ -32,8 +32,10 @@ from magnum.micromagnetics.stephandler.screen_log import ScreenLog
 from magnum.micromagnetics.stephandler.data_table_log import DataTableLog
 from magnum.micromagnetics.stephandler.fancy_screen_log import FancyScreenLog
 from magnum.micromagnetics.stephandler.web_stephandler import WebStepHandler
+from magnum.micromagnetics.stephandler.screen_log_minimizer import ScreenLogMinimizer
 
 __all__ = [
     "OOMMFStorage", "ImageStorage", "VTKStorage", "ScreenLog",
-    "DataTableLog", "FancyScreenLog", "WebStepHandler"
+    "DataTableLog", "FancyScreenLog", "WebStepHandler",
+    "ScreenLogMinimizer"
 ]

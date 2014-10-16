@@ -32,7 +32,7 @@ class LandauLifshitzGilbert(module.Module):
         self.__valid_factors = False
 
     def calculates(self):
-        return ["dMdt", "M", "H_tot", "E_tot", "deg_per_ns"]
+        return ["dMdt", "M", "H_tot", "E_tot", "deg_per_ns", "minimizer_M", "minimizer_dM"]
 
     def updates(self):
         return ["M"]
@@ -78,6 +78,10 @@ class LandauLifshitzGilbert(module.Module):
             return self.calculate_dMdt(state)
         elif id == "deg_per_ns":
             return self.calculate_deg_per_ns(state)
+        elif id == "minimizer_M":
+            return lambda h: self.calculate_minimizer_M(state, h)
+        elif id == "minimizer_dM":
+            return self.calculate_minimizer_dM(state)
         else:
             raise KeyError(id)
 
@@ -125,6 +129,37 @@ class LandauLifshitzGilbert(module.Module):
             dMdt.add(dMdt_i)
 
         return dMdt
+
+    def calculate_minimizer_dM(self, state):
+        # TODO other LLG terms?
+        if not self.__valid_factors: self.__initFactors()
+
+        if hasattr(state.cache, "minimizer_dM"): return state.cache.minimizer_dM
+        result = state.cache.minimizer_dM = VectorField(self.system.mesh)
+
+        # Get effective field
+        H_tot = self.calculate_H_tot(state)
+
+        # TODO do this in every step?
+        zero = Field(self.system.mesh)
+        zero.fill(0.0)
+
+        magneto.llge(zero, self.__f2, state.M, H_tot, result)
+
+        return result
+
+    def calculate_minimizer_M(self, state, h):
+        # TODO other LLG terms?
+        if not self.__valid_factors: self.__initFactors()
+
+        result = VectorField(self.system.mesh)
+
+        # Get effective field
+        H_tot = self.calculate_H_tot(state)
+
+        magneto.minimize(self.__f2, h, state.M, H_tot, result)
+
+        return result
 
     def calculate_deg_per_ns(self, state):
         if hasattr(state.cache, "deg_per_ns"): return state.cache.deg_per_ns

@@ -19,7 +19,6 @@ __author__ = "The MicroMagnum team"
 __version__ = "0.2rc4"
 __license__ = 'GPL3'
 
-
 # I. Import public API of modules in this package
 from magnum.tools import flush, frange, irange, range_3d
 __all__ = ["flush", "frange", "irange", "range_3d"]

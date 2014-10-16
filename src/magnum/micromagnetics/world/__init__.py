@@ -25,8 +25,10 @@ from magnum.micromagnetics.world.sphere import Sphere
 from magnum.micromagnetics.world.cylinder import Cylinder
 from magnum.micromagnetics.world.prism import Prism
 from magnum.micromagnetics.world.image_shape import ImageShape, ImageShapeCreator
+from magnum.micromagnetics.world.gmsh_shape import GmshShape
 
 __all__ = [
     "Material", "Body", "World",
-    "Shape", "Everywhere", "Cuboid", "Sphere", "Cylinder", "Prism", "ImageShape", "ImageShapeCreator"
+    "Shape", "Everywhere", "Cuboid", "Sphere", "Cylinder", "Prism",
+    "ImageShape", "ImageShapeCreator", "GmshShape"
 ]
