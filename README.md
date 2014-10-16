@@ -1,20 +1,16 @@
-MicroMagnum
+magnum.fd
 ===========
 
-**Fast Physical Simulator for Computations on CPUs and Graphics Processing Units (GPU)**
+magnum.fd is a finite-difference/FFT package for the solution of dynamical micromagnetic problems. It is written in Python, C++ and Cuda C and runs on CPU as well as GPU.
 
-MicroMagNum project homepage: http://micromagnum-tis.informatik.uni-hamburg.de
+To get started, visit http://micromagnetics.org/magnum.fd .
 
-MicroMagnum is a fast easy-to-use simulator that runs on CPUs as well as on GPUs using the CUDA platform. It combines the speed and flexibility of C++ together with the usability of Python.
+Original Project MicroMagnum
+----------------------------
+magnum.fd is forked from MicroMagnum (https://github.com/MicroMagnum/MicroMagnum) that was developed by the MicroMagnum Team:
 
-MicroMagnum has a robust and highly modular architecture. This enables its easy extension by further physical modules.
-
-Team
-====
-
-* Andre Drews
-* Gunnar Selke
-
+* Andre Drews (Head of Team)
+* Gunnar Selke (Lead Developer)
 * Benjamin Krueger   
   - Accurate (and fast!) calculation of the demagnetization tensor, with support for periodic boundary conditions.
   - Oersted field module (in development)
@@ -22,3 +18,9 @@ Team
   - Calculation of the demagnetization field from its scalar potential.
 * Theo Gerhardt      
   - Geometrical shapes for the simulation description.
+
+License and Disclaimer
+----------------------
+magnum.fd is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+magnum.fd is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantability or fitness for a particular purpose. See the GNU General Public License for more details.

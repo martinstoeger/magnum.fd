@@ -1,6 +1,6 @@
-MicroMagnum is licensed under the GPL3 license, see file COPYING.
+magnum.fd is licensed under the GPL3 license, see file COPYING.
 
-The MicroMagnum package contains some external libraries or adapted
+The magnum.fd package contains some external libraries or adapted
 code sections that are licensed under different terms. These terms are
 compatible with the GPL3:
 
