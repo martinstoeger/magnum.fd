@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Command line arguments &mdash; magnum.fd 0.2 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="magnum.fd 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Models" href="models.html"/>
+        <link rel="prev" title="Input and output routines" href="io.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> magnum.fd</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#required-libraries">Required libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#building-micromagnum-from-source">Building MicroMagnum from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="world.html">World</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="world.html#id1">World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#bodies">Bodies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#shapes">Shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#id1">Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#conditions">Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#step-handlers">Step handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolboxes.html">Toolboxes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolboxes.html#vortex-toolbox">Vortex toolbox</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#landaulifshitzgilbert">LandauLifshitzGilbert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#exchangefield">ExchangeField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#strayfield">StrayField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#anisotropyfield">AnisotropyField</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Input and output routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="io.html#read-and-write-vector-fields">Read and write vector fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#logging-functions">Logging functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Command line arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tweaks">Tweaks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#landau-lifshitz-gilbert-equation">Landau Lifshitz Gilbert equation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#used-libraries">Used libraries</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">magnum.fd</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Command line arguments</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/cmdargs.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="command-line-arguments">
+<h1>Command line arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h1>
+<p>Any script that loads MicroMagnum using the &#8216;import magnum&#8217; command is subject to these command line arguments:</p>
+<div class="highlight-text"><div class="highlight"><pre>Usage: &lt;your script&gt;.py [options]
+
+Options:
+  --version             show program&#39;s version number and exit
+  -h, --help            show this help message and exit
+
+  Hardware options:
+    Options that control which hardware is used.
+
+    -g GPU_ID           enable GPU processing (using 32-bit accuracy) on cuda
+                        device GPU_ID. The simulator will fall back to CPU
+                        mode if it was not compiled with CUDA support or when
+                        no CUDA capable graphics cards were detected.
+    -G GPU_ID           enable GPU processing (using 64-bit accuracy) on cuda
+                        device GPU_ID. TODO: Describe fallback behaviour.
+    -t NUM_THREADS, --threads=NUM_THREADS
+                        enable CPU multithreading with NUM_THREADS (1..64)
+                        threads. This parameter instructs the fftw library to
+                        use NUM_THREADS threads for computing FFTs.
+
+  Logging options:
+    Options related to logging and benchmarking.
+
+    -l LEVEL, --loglevel=LEVEL
+                        set log level (0:Debug, 1:Info, 2:Warn, 4:Error,
+                        5:Critical), default is Debug (0).
+    --prof              Log profiling info at program exit.
+
+  Parameter sweep options:
+    These options have only an effect when the simulation script uses a
+    Controller object to sweep through a parameter range.
+
+    -p RANGE, --param-range=RANGE
+                        set parameter range to run, e.g. --prange=0,64.
+    --print-num-params  print number of sweep parameters to stdout and exit.
+    --print-all-params  print all sweep parameters to stdout and exit.
+
+  Miscellanous options:
+    --on_io_error=MODE  Specifies what to do when an i/o error occurs when
+                        writing an .omf/.vtk file. 0: Abort (default), 1:
+                        Retry a few times, then abort, 2: Retry a few times,
+                        then pause and ask for user intervention
+</pre></div>
+</div>
+<div class="section" id="tweaks">
+<h2>Tweaks<a class="headerlink" href="#tweaks" title="Permalink to this headline">¶</a></h2>
+<p>Some tweaks can be definging certain environment variables before
+running a script. These are mostly useful for debugging and benchmarking the
+simulator.</p>
+<ul>
+<li><p class="first">MAGNUM_DEMAG_GARBAGE</p>
+<blockquote>
+<div><p>Don&#8217;t calculate demag tensor (and thus produce invalid results).
+Useful for benchmarking only.</p>
+</div></blockquote>
+</li>
+<li><p class="first">MAGNUM_DEMAG_NO_INFINITY_CORRECTION</p>
+<blockquote>
+<div><p>Disable demag tensor infinity correction in case of periodic boundary
+conditions.</p>
+</div></blockquote>
+</li>
+<li><p class="first">MAGNUM_OMF_NOSCALE</p>
+<blockquote>
+<div><p>Always use &#8220;valuemultiplier=1&#8221; for writing .omf/.ohf files.</p>
+</div></blockquote>
+</li>
+</ul>
+<p>Example 1:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">export </span><span class="nv">MAGNUM_OMF_NOSCALE</span><span class="o">=</span>1 <span class="o">&amp;&amp;</span> ./myscript.py
+</pre></div>
+</div>
+<p>Example 2: (Inside Python script)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="p">;</span> <span class="n">sys</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;MAGNUM_OMF_NOSCALE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;1&quot;</span>
+<span class="kn">from</span> <span class="nn">magnum</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="c"># do stuff</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="models.html" class="btn btn-neutral float-right" title="Models"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="io.html" class="btn btn-neutral" title="Input and output routines"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2010-2014 MicroMagnum Team, 2014 magnum.fd Team.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

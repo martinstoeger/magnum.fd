@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Modules &mdash; magnum.fd 0.2 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="magnum.fd 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Input and output routines" href="io.html"/>
+        <link rel="prev" title="Toolboxes" href="toolboxes.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> magnum.fd</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#required-libraries">Required libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#building-micromagnum-from-source">Building MicroMagnum from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="world.html">World</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="world.html#id1">World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#bodies">Bodies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#shapes">Shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#id1">Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#conditions">Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#step-handlers">Step handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolboxes.html">Toolboxes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolboxes.html#vortex-toolbox">Vortex toolbox</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#landaulifshitzgilbert">LandauLifshitzGilbert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exchangefield">ExchangeField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#strayfield">StrayField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#anisotropyfield">AnisotropyField</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Input and output routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="io.html#read-and-write-vector-fields">Read and write vector fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#logging-functions">Logging functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cmdargs.html">Command line arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmdargs.html#tweaks">Tweaks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#landau-lifshitz-gilbert-equation">Landau Lifshitz Gilbert equation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#used-libraries">Used libraries</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">magnum.fd</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Modules</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/modules.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
+<p>Overview:</p>
+<ul class="simple">
+<li>ExchangeField</li>
+<li>StrayField</li>
+<li>AnisotropyField</li>
+<li>ExternalField</li>
+<li>LandauLifshitzGilbert</li>
+</ul>
+<div class="section" id="landaulifshitzgilbert">
+<h2>LandauLifshitzGilbert<a class="headerlink" href="#landaulifshitzgilbert" title="Permalink to this headline">¶</a></h2>
+<p>This is the module that is needed to compute the Landau-Lifshitz-Gilbert
+equation.  It is included by default by the create_solver function and
+thus must not be specified in its module inclusion list.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="11%" />
+<col width="9%" />
+<col width="11%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>M</td>
+<td>in/out</td>
+<td>VF</td>
+<td>A/m</td>
+<td>The current magnetization vector field</td>
+</tr>
+<tr class="row-odd"><td>dMdt</td>
+<td>out</td>
+<td>VF</td>
+<td>A/m per s</td>
+<td>Change of magnetization M (e.g. LHS of LLG-Equation)</td>
+</tr>
+<tr class="row-even"><td>H_eff</td>
+<td>out</td>
+<td>VF</td>
+<td>A/m</td>
+<td>Effective magnetic field</td>
+</tr>
+<tr class="row-odd"><td>E_eff</td>
+<td>out</td>
+<td>S</td>
+<td>J</td>
+<td>Effectice field energy</td>
+</tr>
+<tr class="row-even"><td>alpha</td>
+<td>parameter</td>
+<td>F</td>
+<td>&nbsp;</td>
+<td>Damping constant</td>
+</tr>
+<tr class="row-odd"><td>Ms</td>
+<td>parameter</td>
+<td>F</td>
+<td>A/m</td>
+<td>Saturation magnetization</td>
+</tr>
+</tbody>
+</table>
+<p>Input variables: Any effective field contribution H_xyz from activated modules (A/m, VF)</p>
+</div>
+<div class="section" id="exchangefield">
+<h2>ExchangeField<a class="headerlink" href="#exchangefield" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="11%" />
+<col width="9%" />
+<col width="11%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>H_exch</td>
+<td>out</td>
+<td>VF</td>
+<td>A/m</td>
+<td>Exchange field</td>
+</tr>
+<tr class="row-odd"><td>E_exch</td>
+<td>out</td>
+<td>S</td>
+<td>J</td>
+<td>Exchange field energy</td>
+</tr>
+<tr class="row-even"><td>A</td>
+<td>parameter</td>
+<td>F</td>
+<td>J/m</td>
+<td>Exchange stiffness constant</td>
+</tr>
+</tbody>
+</table>
+<p>Input variables: M (A/m, VF), Ms (A/m, F)</p>
+</div>
+<div class="section" id="strayfield">
+<h2>StrayField<a class="headerlink" href="#strayfield" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="11%" />
+<col width="9%" />
+<col width="11%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Unit</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>H_stray</td>
+<td>out</td>
+<td>VF</td>
+<td>A/m</td>
+<td>Strayfield</td>
+</tr>
+<tr class="row-odd"><td>E_stray</td>
+<td>out</td>
+<td>S</td>
+<td>J</td>
+<td>Strayfield energy</td>
+</tr>
+</tbody>
+</table>
+<p>Input variables: M (A/m, VF)</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">magnum</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c"># 100x100 cells, cellsize 1 nm x 1 nm x 4 nm</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">RectangularMesh</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">1e-9</span><span class="p">,</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="mf">4e-9</span><span class="p">))</span>
+<span class="n">world</span> <span class="o">=</span> <span class="n">World</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">Body</span><span class="p">(</span><span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="n">Material</span><span class="o">.</span><span class="n">Py</span><span class="p">(),</span> <span class="n">Everywhere</span><span class="p">()))</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="p">[</span><span class="n">StrayField</span><span class="p">,</span> <span class="n">ExchangeField</span><span class="p">])</span>
+
+<span class="c"># Initialize magnetization M</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="mf">8e5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="c"># or:</span>
+<span class="c"># solver.state.M = readOMF(&quot;M.omf&quot;)</span>
+
+<span class="c"># Calculate and store stray field generated by M</span>
+<span class="n">writeOMF</span><span class="p">(</span><span class="s">&quot;strayfield.ohf&quot;</span><span class="p">,</span> <span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">H_stray</span><span class="p">)</span>
+
+<span class="c"># Print stray field energy</span>
+<span class="k">print</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">E_stray</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="anisotropyfield">
+<h2>AnisotropyField<a class="headerlink" href="#anisotropyfield" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Inputs: M</li>
+<li>Outputs: H_aniso, E_aniso</li>
+<li>Defines parameters: k_uniaxial, k_cubic, axis1, axis2</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="io.html" class="btn btn-neutral float-right" title="Input and output routines"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="toolboxes.html" class="btn btn-neutral" title="Toolboxes"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2010-2014 MicroMagnum Team, 2014 magnum.fd Team.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

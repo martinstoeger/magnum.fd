@@ -1,0 +1,446 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; magnum.fd 0.2 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="magnum.fd 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Getting Started" href="gettingstarted.html"/>
+        <link rel="prev" title="Welcome to magnum.fd’ documentation!" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> magnum.fd</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#required-libraries">Required libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-micromagnum-from-source">Building MicroMagnum from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="world.html">World</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="world.html#id1">World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#bodies">Bodies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#shapes">Shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="solver.html">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#id1">Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#conditions">Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver.html#step-handlers">Step handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolboxes.html">Toolboxes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolboxes.html#vortex-toolbox">Vortex toolbox</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#landaulifshitzgilbert">LandauLifshitzGilbert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#exchangefield">ExchangeField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#strayfield">StrayField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#anisotropyfield">AnisotropyField</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Input and output routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="io.html#read-and-write-vector-fields">Read and write vector fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#logging-functions">Logging functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cmdargs.html">Command line arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmdargs.html#tweaks">Tweaks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#landau-lifshitz-gilbert-equation">Landau Lifshitz Gilbert equation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#used-libraries">Used libraries</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">magnum.fd</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Installation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/install.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>In this section the following tasks are described:</p>
+<ul class="simple">
+<li>Installing required libraries</li>
+<li>Building MicroMagnum from source</li>
+<li>Testing the MicroMagnum installation</li>
+</ul>
+<div class="section" id="required-libraries">
+<h2>Required libraries<a class="headerlink" href="#required-libraries" title="Permalink to this headline">¶</a></h2>
+<p>Required runtime libraries:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="9%" />
+<col width="8%" />
+<col width="21%" />
+<col width="31%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Library</th>
+<th class="head">Should work
+with version</th>
+<th class="head">Recommended
+version</th>
+<th class="head">Remarks</th>
+<th class="head">URL</th>
+<th class="head">Ubuntu/Debian package</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Python developer package</td>
+<td>2.4</td>
+<td>2.6,2.7,3.2</td>
+<td>Python 3.x works</td>
+<td><a class="reference external" href="http://www.python.org">http://www.python.org</a></td>
+<td>python-dev</td>
+</tr>
+<tr class="row-odd"><td>FFTW</td>
+<td>3.0.0</td>
+<td>3.3.2+</td>
+<td>Get the highest version</td>
+<td><a class="reference external" href="http://www.fftw.org">http://www.fftw.org</a></td>
+<td>libfftw3-dev</td>
+</tr>
+<tr class="row-even"><td>CUDA
+(if GPU is enabled)</td>
+<td>CUDA 3</td>
+<td>highest</td>
+<td>Tested with CUDA 4</td>
+<td><a class="reference external" href="http://www.nvidia.com">http://www.nvidia.com</a></td>
+<td>(n/a)</td>
+</tr>
+<tr class="row-odd"><td>Numpy
+(optional)</td>
+<td>1.3.0</td>
+<td>1.3.0+</td>
+<td>Needed to convert scalar/vector
+field objects to numpy arrays</td>
+<td><a class="reference external" href="http://www.numpy.org">http://www.numpy.org</a></td>
+<td>python-numpy</td>
+</tr>
+<tr class="row-even"><td>Python Imaging Library
+(optional)</td>
+<td>any recent</td>
+<td>any recent</td>
+<td>Needed for the ImageShapeCreator
+class (optional)</td>
+<td><a class="reference external" href="http://www.pythonware.com/products/pil/">http://www.pythonware.com/products/pil/</a></td>
+<td>python-imaging</td>
+</tr>
+<tr class="row-odd"><td>Sundials CVode
+(optional)</td>
+<td>sundials-2.5.0
+cvode-2.7.0</td>
+<td>cvode-2.7.0</td>
+<td>Needed for using implicit CVode
+evolver (optional)</td>
+<td><a class="reference external" href="http://computation.llnl.gov/casc/sundials">http://computation.llnl.gov/casc/sundials</a></td>
+<td>(n/a)</td>
+</tr>
+</tbody>
+</table>
+<p>Ubuntu/Debian apt-get command:</p>
+<div class="highlight-bash"><div class="highlight"><pre>sudo apt-get install python-dev python-numpy python-imaging libfftw3-dev
+</pre></div>
+</div>
+<p>Additional software that is required to build MicroMagnum from source:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="11%" />
+<col width="10%" />
+<col width="24%" />
+<col width="23%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Software</th>
+<th class="head">&#8220;should work&#8221;</th>
+<th class="head">Recommended</th>
+<th class="head">Remarks</th>
+<th class="head">URL</th>
+<th class="head">Ubuntu/Debian package</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>g++ build chain</td>
+<td>any</td>
+<td>newest</td>
+<td>&nbsp;</td>
+<td><a class="reference external" href="http://gcc.gnu.org">http://gcc.gnu.org</a></td>
+<td>g++</td>
+</tr>
+<tr class="row-odd"><td>cmake</td>
+<td>2.8.8</td>
+<td>2.8.8+</td>
+<td>Build system</td>
+<td><a class="reference external" href="http://www.cmake.org">http://www.cmake.org</a></td>
+<td>cmake</td>
+</tr>
+<tr class="row-even"><td>swig</td>
+<td>1.3</td>
+<td>2.0.1+</td>
+<td>Python wrapper generator</td>
+<td><a class="reference external" href="http://www.swig.org">http://www.swig.org</a></td>
+<td>swig1.3, swig2.0</td>
+</tr>
+<tr class="row-odd"><td>Sphinx</td>
+<td>any recent</td>
+<td>0.6.6+</td>
+<td>Python documentation generator</td>
+<td><a class="reference external" href="http://sphinx.pocoo.org">http://sphinx.pocoo.org</a></td>
+<td>python-sphinx</td>
+</tr>
+<tr class="row-even"><td>bzr</td>
+<td>any recent</td>
+<td>any recent</td>
+<td>Bazaar version control system</td>
+<td><a class="reference external" href="http://bazaar-vcs.org/">http://bazaar-vcs.org/</a></td>
+<td>bzr</td>
+</tr>
+</tbody>
+</table>
+<p>Ubuntu/Debian apt-get command:</p>
+<div class="highlight-bash"><div class="highlight"><pre>sudo apt-get install g++ cmake python-sphinx bzr
+sudo apt-get install swig2.0
+sudo apt-get install swig1.3 <span class="c"># if swig2.0 is not available</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-micromagnum-from-source">
+<h2>Building MicroMagnum from source<a class="headerlink" href="#building-micromagnum-from-source" title="Permalink to this headline">¶</a></h2>
+<p>Getting the source code: You may either get an source package from the download area or get the source from the official git repository.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># either from Github</span>
+git clone git://github.com/MicroMagnum/MicroMagnum.git
+
+<span class="c"># or extract a source package..</span>
+tar -xvf micromagnum.tar.gz
+</pre></div>
+</div>
+<p>Now the MicroMagnum source code is located in the &#8220;micromagnum&#8221; subdirectory. To build MicroMagnum, enter:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>micromagnum                  <span class="c"># enter MicroMagnum base directory</span>
+<span class="nb">cd </span>src/build                    <span class="c"># enter build directory</span>
+cmake ..                        <span class="c"># to compile for CPU</span>
+make                            <span class="c"># start the build process</span>
+sudo make install               <span class="c"># installs MicroMagnum as python package</span>
+</pre></div>
+</div>
+<p>You can use the following parameters to customize your installation:</p>
+<div class="highlight-bash"><div class="highlight"><pre>cmake .. <span class="o">[</span>parameters<span class="o">]</span>
+-DENABLE_CUDA_32<span class="o">=</span>on  <span class="c"># to compile for cuda 32 bit</span>
+-DENABLE_CUDA_64<span class="o">=</span>on  <span class="c"># to compile for cuda 64 bit</span>
+-DUSE_PYTHON2<span class="o">=</span>on     <span class="c"># force compile for python2</span>
+-DUSE_PYTHON3<span class="o">=</span>on     <span class="c"># force compile for python3</span>
+-DUSE_CVODE<span class="o">=</span>on       <span class="c"># compile with CVode</span>
+</pre></div>
+</div>
+<p>If you don&#8217;t want to install MicroMagnum, then set PYTHONPATH to &lt;micromagnum-basedir&gt;/src</p>
+<p>To check the installation, start the Python interactive shell by entering &#8220;python&#8221;
+and type &#8220;import magnum&#8221;. If everything went ok, you should see no errors like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre>Python 2.7.1+ <span class="o">(</span>r271:86832, Apr 11 2011, 18:13:53<span class="o">)</span>
+<span class="o">[</span>GCC 4.5.2<span class="o">]</span> on linux2
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for </span>more information.
+&gt;&gt;&gt; import magnum
+<span class="o">[</span> INFO<span class="o">]</span> - MicroMagnum 0.2 Copyright <span class="o">(</span>C<span class="o">)</span> 2012 by the MicroMagnum team.
+<span class="o">[</span> INFO<span class="o">]</span> - This program comes with ABSOLUTELY NO WARRANTY.
+<span class="o">[</span> INFO<span class="o">]</span> - This is free software, and you are welcome to redistribute it
+<span class="o">[</span> INFO<span class="o">]</span> - under certain conditions; see the file COPYING in the distribution package.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>You can then enter the examples directory in the MicroMagnum base directory and try out the examples, like:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>examples/sp4
+./sp4 -l0           <span class="c"># add -g0 to run on GPU</span>
+                    <span class="c">#(this works only when GPU support was enabled at compile time)</span>
+</pre></div>
+</div>
+<div class="section" id="building-with-cvode-evolver">
+<h3>Building with CVode evolver<a class="headerlink" href="#building-with-cvode-evolver" title="Permalink to this headline">¶</a></h3>
+<p>If you want to use MicroMagnum with the implicit CVode evolver you can get it on the sundials download page.
+<a class="reference external" href="http://computation.llnl.gov/casc/sundials/download/download.html">http://computation.llnl.gov/casc/sundials/download/download.html</a></p>
+<p>Or get the package directly:</p>
+<div class="highlight-bash"><div class="highlight"><pre>wget http://computation.llnl.gov/casc/sundials/download/code/cvode-2.7.0.tar.gz
+tar -xvf cvode-2.7.0.tar.gz
+</pre></div>
+</div>
+<p>To build and install you can use:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>cvode-2.7.0          <span class="c"># change to the source directory</span>
+./configure --with-pic  <span class="c"># the PIC option is important to use it with MicroMagnum.</span>
+make                    <span class="c"># build</span>
+sudo make install       <span class="c"># and install cvode</span>
+</pre></div>
+</div>
+<p>Now you can build MicroMagnum and activate CVode with the toggle:</p>
+<div class="highlight-bash"><div class="highlight"><pre>cmake .. -DUSE_CVODE<span class="o">=</span>on   <span class="c"># to enable CVode</span>
+</pre></div>
+</div>
+<p>If you do not have the permission to install globally, use these Cmake parameters:</p>
+<div class="highlight-bash"><div class="highlight"><pre>cmake .. -DUSE_CVODE<span class="o">=</span>on -DCMAKE_INCLUDE_PATH<span class="o">=</span>/INSTALLPATH/include -DCMAKE_LIBRARY_PATH<span class="o">=</span>/INSTALLPATH/lib
+</pre></div>
+</div>
+</div>
+<div class="section" id="fftw-download-and-building">
+<h3>FFTW download and building<a class="headerlink" href="#fftw-download-and-building" title="Permalink to this headline">¶</a></h3>
+<p>If you want a custom build of FFTW.</p>
+<p>FFTW download, version 3.2.2 at <a class="reference external" href="http://www.fftw.org/fftw-3.3.2.tar.gz">http://www.fftw.org/fftw-3.3.2.tar.gz</a>, see
+<a class="reference external" href="http://www.fftw.org">http://www.fftw.org</a> for newer versions such as the latest alpha version.</p>
+<p>Suggested configure parameters:</p>
+<div class="highlight-bash"><div class="highlight"><pre>./configure --with-pic --prefix<span class="o">=</span>/home/gselke/fftw --enable-openmp --enable-sse2
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gettingstarted.html" class="btn btn-neutral float-right" title="Getting Started"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to magnum.fd’ documentation!"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2010-2014 MicroMagnum Team, 2014 magnum.fd Team.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

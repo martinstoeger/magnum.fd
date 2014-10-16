@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Solver &mdash; magnum.fd 0.2 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="magnum.fd 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Controllers" href="controller.html"/>
+        <link rel="prev" title="World" href="world.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> magnum.fd</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#required-libraries">Required libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#building-micromagnum-from-source">Building MicroMagnum from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="world.html">World</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="world.html#id1">World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#bodies">Bodies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#shapes">Shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="world.html#materials">Materials</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Solver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conditions">Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-handlers">Step handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="controller.html">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolboxes.html">Toolboxes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolboxes.html#vortex-toolbox">Vortex toolbox</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#landaulifshitzgilbert">LandauLifshitzGilbert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#exchangefield">ExchangeField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#strayfield">StrayField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#anisotropyfield">AnisotropyField</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">Input and output routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="io.html#read-and-write-vector-fields">Read and write vector fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#logging-functions">Logging functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cmdargs.html">Command line arguments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmdargs.html#tweaks">Tweaks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#landau-lifshitz-gilbert-equation">Landau Lifshitz Gilbert equation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#used-libraries">Used libraries</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">magnum.fd</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Solver</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/solver.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="solver">
+<h1>Solver<a class="headerlink" href="#solver" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Solver<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="magnum.Solver">
+<em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">Solver</tt><big>(</big><em>system</em>, <em>_evolver</em><big>)</big><a class="headerlink" href="#magnum.Solver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="magnum.Solver.solve">
+<tt class="descname">solve</tt><big>(</big><em>stop_condition</em><big>)</big><a class="headerlink" href="#magnum.Solver.solve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p>TODO methods</p>
+<div class="section" id="evolvers">
+<h3>Evolvers<a class="headerlink" href="#evolvers" title="Permalink to this headline">¶</a></h3>
+<p>Currenty, three types of evolvers for the time integration of the LLG
+equation are available.  They are selected using the &#8216;evolver&#8217; argument
+at the time of creation of the Solver object:</p>
+<ul>
+<li><p class="first">Euler evolver with constant time steps (&#8220;<tt class="docutils literal"><span class="pre">euler</span></tt>&#8221;)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Create solver with Euler evolver</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">evolver</span><span class="o">=</span><span class="s">&quot;euler&quot;</span><span class="p">,</span> <span class="n">time_step</span><span class="o">=</span><span class="mf">1e-14</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">time_step</span></tt> parameter is optional, default is 1e-14.</p>
+</li>
+<li><p class="first">Runge-Kutta-Fehlberg evolver (RKF45) with variable time steps (&#8220;<tt class="docutils literal"><span class="pre">rkf45</span></tt>&#8221;)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Create solver with RKF45 evolver</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">evolver</span><span class="o">=</span><span class="s">&quot;rkf45&quot;</span><span class="p">,</span> <span class="n">eps_abs</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">eps_rel</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">eps_abs</span></tt> and <tt class="docutils literal"><span class="pre">eps_rel</span></tt> parameters are optional with the defaults
+being as shown in the example.</p>
+</li>
+<li><p class="first">CVode implicit evolver with variable timesteps (&#8220;<tt class="docutils literal"><span class="pre">cvode</span></tt>&#8221;)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Create solver with cvode evolver</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">evolver</span><span class="o">=</span><span class="s">&quot;cvode&quot;</span><span class="p">,</span> <span class="n">eps_abs</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">eps_rel</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+                  <span class="n">step_size</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span> <span class="n">newton_method</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">eps_abs</span></tt>, <tt class="docutils literal"><span class="pre">eps_rel</span></tt>, <tt class="docutils literal"><span class="pre">step_size</span></tt> and <tt class="docutils literal"><span class="pre">newton_method</span></tt> parameters are optional with the defaults
+being as shown in the example.</p>
+</li>
+</ul>
+<p>The RK45 evolver is the default evolver when the &#8216;evolver&#8217; option is ommited.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="18%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Evolver id</th>
+<th class="head">Options (defaults)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Euler</td>
+<td><tt class="docutils literal"><span class="pre">euler</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">step_size</span></tt> (<span class="math">\(1\cdot 10^{-14}\)</span>)</td>
+</tr>
+<tr class="row-odd"><td>Runge-Kutta-Fehlberg 45</td>
+<td><tt class="docutils literal"><span class="pre">rkf45</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">eps_abs</span></tt> (<span class="math">\(1\cdot 10^{-3}\)</span>),
+<tt class="docutils literal"><span class="pre">eps_rel</span></tt> (<span class="math">\(1\cdot 10^{-4}\)</span>)</td>
+</tr>
+<tr class="row-even"><td>CVode implicit evolver</td>
+<td><tt class="docutils literal"><span class="pre">cvode</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">eps_abs</span></tt> (<span class="math">\(1\cdot 10^{-3}\)</span>),
+<tt class="docutils literal"><span class="pre">eps_rel</span></tt> (<span class="math">\(1\cdot 10^{-4}\)</span>),
+<tt class="docutils literal"><span class="pre">step_size</span></tt> (<span class="math">\(1\cdot 10^{-12}\)</span>),
+<tt class="docutils literal"><span class="pre">newton_method</span></tt> (<tt class="docutils literal"><span class="pre">False</span></tt>)</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="cvode-evolver">
+<h4>CVode evolver<a class="headerlink" href="#cvode-evolver" title="Permalink to this headline">¶</a></h4>
+<p>CVode uses two iteration methods, fuctional and Newton.
+The functional method is very fast and more stable than Runge-Kutta.
+The Newton method is very slow and very stable.
+Information about the evolver are available on:
+<a class="reference external" href="http://computation.llnl.gov/casc/sundials/documentation/documentation.html">http://computation.llnl.gov/casc/sundials/documentation/documentation.html</a>
+The relax condition does not work with CVode, Runge-Kutta should be used.</p>
+</div>
+</div>
+</div>
+<div class="section" id="conditions">
+<h2>Conditions<a class="headerlink" href="#conditions" title="Permalink to this headline">¶</a></h2>
+<p>Objects of the Condition class check whether some condition for a magnetic
+state is true.  For example, the Condition.relaxed() condition is true
+when the time deriviative of the magnetization <span class="math">\(d\mathbf{M}/dt\)</span>
+of a given simulation state is small enough. This condition are used as
+abort criterions for simulations. Another application is to specify when
+step handlers (see <a class="reference internal" href="#magnum.StepHandler" title="magnum.StepHandler"><tt class="xref py py-class docutils literal"><span class="pre">StepHandler</span></tt></a>) are activated during
+a simulations.</p>
+<p>Conditions can be negated, or-combined and and-combined using operators.</p>
+<dl class="attribute">
+<dt id="magnum.solver.condition">
+<tt class="descclassname">magnum.solver.</tt><tt class="descname">condition</tt><a class="headerlink" href="#magnum.solver.condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#magnum.solver.condition" title="magnum.solver.condition"><tt class="xref py py-class docutils literal"><span class="pre">magnum.solver.condition</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="step-handlers">
+<h2>Step handlers<a class="headerlink" href="#step-handlers" title="Permalink to this headline">¶</a></h2>
+<p>Step handlers are added to the solver object by calling <tt class="xref py py-func docutils literal"><span class="pre">Solver.addStepHandler()</span></tt>.</p>
+<p>The base class of all step handlers is the abstract class StepHandler:</p>
+<dl class="class">
+<dt id="magnum.StepHandler">
+<em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">StepHandler</tt><a class="headerlink" href="#magnum.StepHandler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="magnum.StepHandler.handle">
+<tt class="descname">handle</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#magnum.StepHandler.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by the solver when a new simulation step
+needs to be processed by the step handler.  It must be overridden
+by a sub-class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magnum.StepHandler.done">
+<tt class="descname">done</tt><big>(</big><big>)</big><a class="headerlink" href="#magnum.StepHandler.done" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by the solver when a simulation is complete
+(before the &#8216;&#8217;solver&#8217;&#8217; method returns). Step handlers can use this
+method to clean up, close log files etc.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="logging-step-handlers">
+<h3>Logging step handlers<a class="headerlink" href="#logging-step-handlers" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="magnum.DataTableLog">
+<em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">DataTableLog</tt><big>(</big><em>path</em>, <em>title='(no title)'</em><big>)</big><a class="headerlink" href="#magnum.DataTableLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>This step handler produces a log in the form of a text file in the
+OOMMF .odt file format.  By default, the simulation time, the step size,
+the averaged magnetizations and the wall time is included in the log.</p>
+<p>Example OOMMF data table (.odt) log file that is generated by <a class="reference internal" href="#magnum.DataTableLog" title="magnum.DataTableLog"><tt class="xref py py-class docutils literal"><span class="pre">DataTableLog</span></tt></a>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># ODT 1.0</span>
+<span class="c"># Table Start</span>
+<span class="c"># Title: (no title)</span>
+<span class="c">#</span>
+<span class="c">## Generated by magnum.DataTableStepHandler.</span>
+<span class="c">## Number of columns: 7</span>
+<span class="c">#</span>
+<span class="c"># Columns:   {time}                    {step size}               {average magn. x}         {average magn. y}         {average magn. z}         {stray-field energy}      {exchange-field energy}</span>
+<span class="c"># Units:     {s}                       {s}                       {A/m}                     {A/m}                     {A/m}                     {J}                       {J}</span>
+0.0                       1.0000000000000001e-15    773763.05520921084    99865.913350068877    0.51014508223702026    5.425877056278558e-19    8.8083062896386378e-20
+7.190533493683745e-12     1.0932486392938052e-12    772611.96576462197    103833.22777842356    -7219.4953021688525   5.4851562239571601e-19    9.0258813551580614e-20
+2.3403744897262799e-11    1.5074283534957295e-12    760973.57366955292    139366.78750870723    -22539.08658192489    6.0677999378414166e-19    1.0995487038693322e-19
+3.9428649475373533e-11    1.85956428734661e-12      733162.57517834462    204774.35569038574    -35631.238305689978    7.397106785586106e-19    1.4440096479070547e-19
+...
+...
+...
+9.6434123993105961e-10    8.9861003891477315e-13    -777442.58149938367    -58344.913010609191   6238.8726882989358    7.5244095099684009e-19    1.2958402944299087e-19
+9.7402535807940305e-10    1.2062784047071156e-12    -783542.17931054463    -34240.439240366963   20335.17015782345     8.0952409880500454e-19    1.0968481551637731e-19
+9.8338862949946303e-10    9.6173440992413807e-13    -789079.08096694865    8492.6521512550589    30227.519883341236    8.7514283220039697e-19    8.8932130375339342e-20
+9.9374164359195942e-10    9.0429246884428303e-13    -789960.99319875205    68987.397611624358    34958.637897265799    9.1911429456896382e-19    7.6963987580309788e-20
+<span class="c"># Table End</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="magnum.ScreenLog">
+<em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">ScreenLog</tt><a class="headerlink" href="#magnum.ScreenLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>This step handler produces a log of the simulations on the screen. By
+default, the simulation time, the step size, and the averaged
+magnetizations is included in the log.</p>
+<p>Example output on the console:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># time: t (s)   step size: h (s)   average magn. x: Mx (A/m)   average magn. y: My (A/m)   average magn. z: Mz (A/m)</span>
+<span class="nv">t</span><span class="o">=</span>0.0, <span class="nv">h</span><span class="o">=</span>1.0000000000000001e-15, <span class="nv">Mx</span><span class="o">=</span>720260.46511223307, <span class="nv">My</span><span class="o">=</span>298341.65158440446, <span class="nv">Mz</span><span class="o">=</span>0.0
+<span class="nv">t</span><span class="o">=</span>1.3374476956998866e-10, <span class="nv">h</span><span class="o">=</span>1.8554788708302094e-12, <span class="nv">Mx</span><span class="o">=</span>759676.44090676622, <span class="nv">My</span><span class="o">=</span>157975.1496951601, <span class="nv">Mz</span><span class="o">=</span>3802.0657114495889
+<span class="nv">t</span><span class="o">=</span>2.9960043454703471e-10, <span class="nv">h</span><span class="o">=</span>1.9145468033064472e-12, <span class="nv">Mx</span><span class="o">=</span>770546.01143940352, <span class="nv">My</span><span class="o">=</span>111393.9534971742, <span class="nv">Mz</span><span class="o">=</span>717.70498717729379
+...
+<span class="c"># done</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Both the classes <a class="reference internal" href="#magnum.DataTableLog" title="magnum.DataTableLog"><tt class="xref py py-class docutils literal"><span class="pre">DataTableLog</span></tt></a> and <a class="reference internal" href="#magnum.ScreenLog" title="magnum.ScreenLog"><tt class="xref py py-class docutils literal"><span class="pre">ScreenLog</span></tt></a> have the following member functions:</p>
+<dl class="method">
+<dt id="magnum.addColumn">
+<tt class="descclassname">magnum.</tt><tt class="descname">addColumn</tt><big>(</big><span class="optional">[</span><em>(id</em>, <em>desc=&quot;(no descr.)&quot;</em>, <em>unit=&quot;unknown&quot;</em>, <em>fmt=&quot;%r&quot;)+</em>, <span class="optional">]</span><em>func</em><big>)</big><a class="headerlink" href="#magnum.addColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds one or more columns to the log. Each tuple represents one column. The last argument specifies a function that returns
+for a state object a tuple of &lt;number of columns&gt; scalar entries. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span> <span class="o">=</span> <span class="n">ScreenLog</span><span class="p">()</span>
+<span class="n">log</span><span class="o">.</span><span class="n">addColumn</span><span class="p">(</span>
+    <span class="c"># description of one table column</span>
+    <span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">,</span> <span class="s">&quot;simulation time&quot;</span><span class="p">,</span> <span class="s">&quot;s&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%r</span><span class="s">&quot;</span><span class="p">),</span>
+    <span class="c"># function that maps a state to its current simulation time</span>
+    <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">t</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">addColumn</span><span class="p">(</span>
+    <span class="c"># description of first table columns</span>
+    <span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">,</span> <span class="s">&quot;simulation time&quot;</span><span class="p">,</span> <span class="s">&quot;s&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%r</span><span class="s">&quot;</span><span class="p">),</span>
+    <span class="c"># description of another table column</span>
+    <span class="p">(</span><span class="s">&quot;h&quot;</span><span class="p">,</span> <span class="s">&quot;step size&quot;</span><span class="p">,</span> <span class="s">&quot;s&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%r</span><span class="s">&quot;</span><span class="p">),</span>
+    <span class="c"># function that maps a state to its current simulation time and step size</span>
+    <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The first tuple entry specifies the variable name associated with the
+column. The second entry is a description of the variable, the third
+names the unit of the variable. The last entry specifies the format
+which is used to convert the scalar that is returned by the mapping
+function to a string. Only the first entry is mandatory. If only the first entry is specified,
+the tuple may be ommited:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span><span class="o">.</span><span class="n">addColumn</span><span class="p">((</span><span class="s">&quot;t&quot;</span><span class="p">,),</span> <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>   <span class="c"># this line...</span>
+<span class="n">log</span><span class="o">.</span><span class="n">addColumn</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>      <span class="c"># ...is equal to this line.</span>
+
+<span class="c"># another example:</span>
+<span class="n">log</span><span class="o">.</span><span class="n">addColumn</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">,</span> <span class="s">&quot;h&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="magnum.addTimeColumn">
+<tt class="descclassname">magnum.</tt><tt class="descname">addTimeColumn</tt><big>(</big><big>)</big><a class="headerlink" href="#magnum.addTimeColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a simulation time column. As this column is added by default, this function is usually not called by the user.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magnum.addStepSizeColumn">
+<tt class="descclassname">magnum.</tt><tt class="descname">addStepSizeColumn</tt><big>(</big><big>)</big><a class="headerlink" href="#magnum.addStepSizeColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a step size column. This column is added by default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magnum.addAverageMagColumn">
+<tt class="descclassname">magnum.</tt><tt class="descname">addAverageMagColumn</tt><big>(</big><big>)</big><a class="headerlink" href="#magnum.addAverageMagColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds three columns to the log with the average magnetization in x, y and z-direction. Added by default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="magnum.addEnergyColumn">
+<tt class="descclassname">magnum.</tt><tt class="descname">addEnergyColumn</tt><big>(</big><big>)</big><a class="headerlink" href="#magnum.addEnergyColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO addEnergyColumn</p>
+</dd></dl>
+
+<p>Examples: Log simulation in a text file &#8216;test.odt&#8217;. By default, the
+simulation time, the time step and &lt;Mx&gt;, &lt;My&gt;, &lt;Mz&gt; is included resulting
+in five table columns.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">solver</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">addStepHandler</span><span class="p">(</span><span class="n">DataTableLog</span><span class="p">(</span><span class="s">&quot;test.odt&quot;</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using the &#8216;addColumn&#8217; and related functions one can add additional
+columns to the log file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span> <span class="o">=</span> <span class="n">DataTableLog</span><span class="p">(</span><span class="s">&quot;test.odt&quot;</span><span class="p">)</span>    <span class="c"># (or: log = ScreenLog() for screen output)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">addEnergyColumn</span><span class="p">(</span><span class="s">&quot;exchange&quot;</span><span class="p">)</span>   <span class="c"># adds column with E_exchange scalars</span>
+<span class="n">log</span><span class="o">.</span><span class="n">addEnergyColumn</span><span class="p">(</span><span class="s">&quot;stray&quot;</span><span class="p">)</span>      <span class="c"># adds column with E_stray scalars</span>
+<span class="n">log</span><span class="o">.</span><span class="n">addTimeColumn</span><span class="p">()</span>               <span class="c"># add (another) column with simulation time</span>
+
+<span class="c"># another way to add a time column</span>
+<span class="n">log</span><span class="o">.</span><span class="n">addColumn</span><span class="p">((</span><span class="s">&quot;t&quot;</span><span class="p">,</span> <span class="s">&quot;time&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%r</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;s&quot;</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+
+<span class="c"># Add two columns with vortex core x/y position using the vortex tool box.</span>
+<span class="c"># (with (50nm, 50nm) as the origin).</span>
+<span class="n">log</span><span class="o">.</span><span class="n">addColumn</span><span class="p">((</span><span class="s">&quot;Vx&quot;</span><span class="p">,</span> <span class="s">&quot;vortex-core-x&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%r</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;m&quot;</span><span class="p">),</span>
+              <span class="p">(</span><span class="s">&quot;Vy&quot;</span><span class="p">,</span> <span class="s">&quot;vortex-core-y&quot;</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%r</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;m&quot;</span><span class="p">),</span>
+              <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="n">vortex</span><span class="o">.</span><span class="n">findCore</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span> <span class="mf">50e-9</span><span class="p">,</span> <span class="mf">50e-9</span><span class="p">))</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">addStepHandler</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-storage-step-handlers">
+<h3>File storage step handlers<a class="headerlink" href="#file-storage-step-handlers" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="magnum.VTKStorage">
+<em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">VTKStorage</tt><big>(</big><em>output_dir</em>, <em>field_id_or_ids=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#magnum.VTKStorage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="magnum.OOMMFStorage">
+<em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">OOMMFStorage</tt><big>(</big><em>output_dir</em>, <em>field_id_or_ids</em>, <em>omf_format=0</em><big>)</big><a class="headerlink" href="#magnum.OOMMFStorage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="magnum.addComment">
+<tt class="descclassname">magnum.</tt><tt class="descname">addComment</tt><big>(</big><em>self</em>, <em>name</em>, <em>fn</em><big>)</big><a class="headerlink" href="#magnum.addComment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="controller.html" class="btn btn-neutral float-right" title="Controllers"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="world.html" class="btn btn-neutral" title="World"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2010-2014 MicroMagnum Team, 2014 magnum.fd Team.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
