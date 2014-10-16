@@ -1,5 +1,6 @@
 /*
- * Copyright 2012, 2013 by the Micromagnum authors.
+ * Copyright 2012-2014 by the MicroMagnum Team
+ * Copyright 2014 by the magnum.fd Team
  *
  * This file is part of MicroMagnum.
  * 
