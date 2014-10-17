@@ -60,7 +60,7 @@
             <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install.html#required-libraries">Required libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#building-micromagnum-from-source">Building MicroMagnum from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#building-magnum-fd-from-source">Building magnum.fd from source</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a><ul>
@@ -202,7 +202,8 @@ the contents of the world, i.e. subregions of the world that are associated with
 <dl class="attribute">
 <dt id="magnum.World.mesh">
 <tt class="descname">mesh</tt><a class="headerlink" href="#magnum.World.mesh" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read-only property that returns the mesh that is associated with this world.</p>
+<dd><p>Read-only property that returns the mesh that is associated with
+this world.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span> <span class="c"># Retrieve the world&#39;s mesh.</span>
 </pre></div>
 </div>
@@ -220,7 +221,8 @@ the contents of the world, i.e. subregions of the world that are associated with
 <dl class="method">
 <dt id="magnum.World.findBody">
 <tt class="descname">findBody</tt><big>(</big><em>body_id</em><big>)</big><a class="headerlink" href="#magnum.World.findBody" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the body with the given id string. It is an error if the body does not exist.</p>
+<dd><p>Return the body with the given id string. It is an error if the
+body does not exist.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">body</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">findBody</span><span class="p">(</span><span class="s">&quot;the_body_id&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -263,10 +265,13 @@ volume.</p>
 <dt id="magnum.Shape">
 <em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">Shape</tt><a class="headerlink" href="#magnum.Shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>The abstract Shape class defines a geometrical shape in 3-D space.
-Shapes are used to define regions in the simulated volume in order to set up spatially varying material parameters (see World and Body classes).
-The most important method is <em>isPointInside</em>, which has to be implemented by concrete subclasses.</p>
+Shapes are used to define regions in the simulated volume in order
+to set up spatially varying material parameters (see World and Body
+classes).  The most important method is <em>isPointInside</em>, which has
+to be implemented by concrete subclasses.</p>
 <p>There are predefinded shapes to use and change.</p>
-<p>Complex shapes can be created from atomic shapes via set operations: union, intersect, invert.
+<p>Complex shapes can be created from atomic shapes via set operations:
+union, intersect, invert.
 (see e.g. <a class="reference external" href="http://en.wikipedia.org/wiki/Constructive_solid_geometry">http://en.wikipedia.org/wiki/Constructive_solid_geometry</a> )</p>
 </dd></dl>
 
@@ -304,6 +309,44 @@ orthogonal to the coordinate axes.</p>
 <dt id="magnum.Everywhere">
 <em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">Everywhere</tt><a class="headerlink" href="#magnum.Everywhere" title="Permalink to this definition">¶</a></dt>
 <dd><p>This shape describes the whole simulation volume, i.e. <em>isPointInside</em> always returns true.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="magnum.GmshShape">
+<em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">GmshShape</tt><big>(</big><em>model</em>, <em>shift=(0.0</em>, <em>0.0</em>, <em>0.0)</em>, <em>scale=1.0</em><big>)</big><a class="headerlink" href="#magnum.GmshShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class can create a shape from a number of gemetry/mesh files that are supported by Gmsh.
+The Python wrappers for Gmsh have to be installed on the system.</p>
+<dl class="staticmethod">
+<dt id="magnum.GmshShape.with_mesh_from_file">
+<em class="property">static </em><tt class="descname">with_mesh_from_file</tt><big>(</big><em>filename</em>, <em>cell_size</em>, <em>scale=1.0</em>, <em>lc=None</em>, <em>order=3</em><big>)</big><a class="headerlink" href="#magnum.GmshShape.with_mesh_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a shape from a Gmsh supported file format (e.g. brep, msh) along
+with a suitabe <tt class="xref py py-class docutils literal"><span class="pre">RectangularMesh</span></tt> to fit the shape in.</p>
+<dl class="docutils">
+<dt><em>Arguments</em></dt>
+<dd><dl class="first last docutils">
+<dt>filename (<tt class="xref py py-class docutils literal"><span class="pre">string</span></tt>)</dt>
+<dd>The geometry file to import</dd>
+<dt>cell_size (<tt class="xref py py-class docutils literal"><span class="pre">[float]</span></tt>)</dt>
+<dd>Cell size of the target mesh to be created</dd>
+<dt>scale (<tt class="xref py py-class docutils literal"><span class="pre">float</span></tt>)</dt>
+<dd>Scaling of the input file</dd>
+<dt>lc (<tt class="xref py py-class docutils literal"><span class="pre">float</span></tt>)</dt>
+<dd>Discretization constant for geometry approximation.
+Don&#8217;t use this unless you know what you are doing.</dd>
+<dt>order (<tt class="xref py py-class docutils literal"><span class="pre">int</span></tt>)</dt>
+<dd>Order for geometry approximiation.
+Don&#8217;t use this unless you know what you are doing.</dd>
+</dl>
+</dd>
+<dt><em>Returns</em></dt>
+<dd><dl class="first last docutils">
+<dt><tt class="xref py py-class docutils literal"><span class="pre">[Mesh,</span> <span class="pre">Shape]</span></tt></dt>
+<dd>The mesh and the shape</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -357,14 +400,7 @@ orthogonal to the coordinate axes.</p>
 <dl class="class">
 <dt id="magnum.Material">
 <em class="property">class </em><tt class="descclassname">magnum.</tt><tt class="descname">Material</tt><big>(</big><em>params</em><big>)</big><a class="headerlink" href="#magnum.Material" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
-<dt id="magnum.Material.get">
-<tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#magnum.Material.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the material parameter with id-string &#8216;key&#8217;. The material parameter
-is usually a scalar value.</p>
-</dd></dl>
-
-<dl class="staticmethod">
+<dd><dl class="staticmethod">
 <dt id="magnum.Material.Py">
 <em class="property">static </em><tt class="descname">Py</tt><big>(</big><em>**params</em><big>)</big><a class="headerlink" href="#magnum.Material.Py" title="Permalink to this definition">¶</a></dt>
 <dd><p>Additional keyword options are merged with the material parameters of the newly created instance.

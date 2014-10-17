@@ -60,7 +60,7 @@
             <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install.html#required-libraries">Required libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#building-micromagnum-from-source">Building MicroMagnum from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#building-magnum-fd-from-source">Building magnum.fd from source</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a><ul>
@@ -148,8 +148,8 @@
 </div>
           <div role="main">
             
-  <div class="section" id="solver">
-<h1>Solver<a class="headerlink" href="#solver" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-magnum">
+<span id="solver"></span><h1>Solver<a class="headerlink" href="#module-magnum" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2>Solver<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -159,6 +159,12 @@
 <dt id="magnum.Solver.solve">
 <tt class="descname">solve</tt><big>(</big><em>stop_condition</em><big>)</big><a class="headerlink" href="#magnum.Solver.solve" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="magnum.micromagnetics.micro_magnetics_solver.Solver.MicroMagneticsSolver.minimize">
+<tt class="descclassname">MicroMagneticsSolver.</tt><tt class="descname">minimize</tt><big>(</big><em>max_dpns=0.01</em>, <em>samples=10</em>, <em>h_max=1e-05</em>, <em>h_min=1e-16</em><big>)</big><a class="headerlink" href="#magnum.micromagnetics.micro_magnetics_solver.Solver.MicroMagneticsSolver.minimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimizes the energy with a direct minimization strategy.</p>
+</dd></dl>
 
 </dd></dl>
 

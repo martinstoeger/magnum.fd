@@ -65,6 +65,8 @@ TODO The Shape class
 .. autoclass:: Cuboid
 .. autoclass:: Cylinder
 .. autoclass:: Everywhere
+.. autoclass:: GmshShape
+   :members:
 
 Materials
 ---------
@@ -87,7 +89,6 @@ In the following the Material class which holds the material parameters for a ma
 
 .. autoclass:: Material
 
-   .. automethod:: Material.get
    .. automethod:: Material.Py
    .. automethod:: Material.Fe
    .. automethod:: Material.Co

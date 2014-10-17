@@ -2,7 +2,7 @@
  Solver 
 ========
 
-.. currentmodule:: magnum
+.. module:: magnum
 
 Solver
 ------
@@ -10,6 +10,7 @@ Solver
 .. autoclass:: Solver
 
    .. automethod:: solve
+   .. automethod:: magnum.micromagnetics.micro_magnetics_solver.MicroMagneticsSolver.minimize
 
 TODO methods
 
