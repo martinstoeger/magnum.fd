@@ -2,7 +2,7 @@
  Models 
 ========
 
-What is actually computed in MagNum?
+What is actually computed in magnum.fd?
 
 Landau Lifshitz Gilbert equation
 ================================

@@ -2,7 +2,7 @@
 License
 =======
 
-MicroMagnum is free software and is licensed under the General
+magnum.fd is free software and is licensed under the General
 Public License 3 (GPL3). For details, please see the file COPYING
 in the distribution package. The GPL3 license is also available 
 online at http://www.gnu.org/licenses/gpl.txt .

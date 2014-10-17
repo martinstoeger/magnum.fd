@@ -5,8 +5,8 @@ Installation
 In this section the following tasks are described:
 
 - Installing required libraries
-- Building MicroMagnum from source
-- Testing the MicroMagnum installation
+- Building magnum.fd from source
+- Testing the magnum.fd installation
 
 Required libraries
 ------------------
@@ -40,7 +40,7 @@ Ubuntu/Debian apt-get command:
 
    sudo apt-get install python-dev python-numpy python-imaging libfftw3-dev
 
-Additional software that is required to build MicroMagnum from source:
+Additional software that is required to build magnum.fd from source:
 
 +--------------------+---------------+-------------+--------------------------------+------------------------------+-----------------------+
 | Software           | "should work" | Recommended | Remarks                        | URL                          | Ubuntu/Debian package |
@@ -64,28 +64,24 @@ Ubuntu/Debian apt-get command:
    sudo apt-get install swig2.0
    sudo apt-get install swig1.3 # if swig2.0 is not available
 
-Building MicroMagnum from source
+Building magnum.fd from source
 --------------------------------
 
-Getting the source code: You may either get an source package from the download area or get the source from the official git repository.
+Clone the git repository
 
 .. code-block:: bash
 
-   # either from Github 
-   git clone git://github.com/MicroMagnum/MicroMagnum.git
+   git clone https://github.com/micromagnetics/magnum.fd.git
 
-   # or extract a source package..
-   tar -xvf micromagnum.tar.gz
-
-Now the MicroMagnum source code is located in the "micromagnum" subdirectory. To build MicroMagnum, enter:
+Now the magnum.fd source code is located in the "magnum.fd" subdirectory. To build magnum.fd, enter:
 
 .. code-block:: bash
   
-   cd micromagnum                  # enter MicroMagnum base directory
+   cd magnum.fd                    # enter magnum.fd base directory
    cd src/build                    # enter build directory
    cmake ..                        # to compile for CPU
    make                            # start the build process
-   sudo make install               # installs MicroMagnum as python package
+   sudo make install               # installs magnum.fd as python package
 
 You can use the following parameters to customize your installation:
 
@@ -98,7 +94,7 @@ You can use the following parameters to customize your installation:
    -DUSE_PYTHON3=on     # force compile for python3
    -DUSE_CVODE=on       # compile with CVode
 
-If you don't want to install MicroMagnum, then set PYTHONPATH to <micromagnum-basedir>/src
+If you don't want to install magnum.fd, then set PYTHONPATH to <micromagnum-basedir>/src
 
 To check the installation, start the Python interactive shell by entering "python"
 and type "import magnum". If everything went ok, you should see no errors like this:
@@ -109,13 +105,15 @@ and type "import magnum". If everything went ok, you should see no errors like t
    [GCC 4.5.2] on linux2
    Type "help", "copyright", "credits" or "license" for more information.
    >>> import magnum
-   [ INFO] - MicroMagnum 0.2 Copyright (C) 2012 by the MicroMagnum team.
-   [ INFO] - This program comes with ABSOLUTELY NO WARRANTY.
-   [ INFO] - This is free software, and you are welcome to redistribute it
-   [ INFO] - under certain conditions; see the file COPYING in the distribution package.
+   [   INFO] - magnum.fd 0.0.1
+   [   INFO] - Copyright (C) 2012-2014 by the MicroMagnum team.
+   [   INFO] - Copyright (C) 2014 by the magnum.fd team.
+   [   INFO] - This program comes with ABSOLUTELY NO WARRANTY.
+   [   INFO] - This is free software, and you are welcome to redistribute it
+   [   INFO] - under certain conditions; see the file COPYING in the distribution package.
    >>> 
 
-You can then enter the examples directory in the MicroMagnum base directory and try out the examples, like:
+You can then enter the examples directory in the magnum.fd base directory and try out the examples, like:
 
 .. code-block:: bash
 
@@ -125,7 +123,7 @@ You can then enter the examples directory in the MicroMagnum base directory and 
 
 Building with CVode evolver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-If you want to use MicroMagnum with the implicit CVode evolver you can get it on the sundials download page.
+If you want to use magnum.fd with the implicit CVode evolver you can get it on the sundials download page.
 http://computation.llnl.gov/casc/sundials/download/download.html
 
 Or get the package directly:
@@ -140,11 +138,11 @@ To build and install you can use:
 .. code-block:: bash
 
   cd cvode-2.7.0          # change to the source directory
-  ./configure --with-pic  # the PIC option is important to use it with MicroMagnum.
+  ./configure --with-pic  # the PIC option is important to use it with magnum.fd.
   make                    # build
   sudo make install       # and install cvode
 
-Now you can build MicroMagnum and activate CVode with the toggle:
+Now you can build magnum.fd and activate CVode with the toggle:
 
 .. code-block:: bash
 

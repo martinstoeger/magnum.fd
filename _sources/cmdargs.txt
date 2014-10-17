@@ -1,7 +1,7 @@
 Command line arguments
 ======================
 
-Any script that loads MicroMagnum using the 'import magnum' command is subject to these command line arguments:
+Any script that loads magnum.fd using the 'import magnum' command is subject to these command line arguments:
 
 .. code-block:: text
 

@@ -60,10 +60,18 @@
             <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install.html#required-libraries">Required libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#building-micromagnum-from-source">Building MicroMagnum from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#building-magnum-fd-from-source">Building magnum.fd from source</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-python-script">Create a Python Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-world">The World</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-solver">The solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#applying-a-field-and-saving-the-results">Applying a Field and Saving the Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#putting-the-whole-thing-together">Putting the Whole Thing Together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="world.html">World</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="world.html#id1">World</a></li>
 <li class="toctree-l2"><a class="reference internal" href="world.html#bodies">Bodies</a></li>
@@ -142,8 +150,199 @@
             
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>Please visit the Getting Started page on our Website.
-<a class="reference external" href="http://micromagnum.informatik.uni-hamburg.de/micromagnum/gettingstarted">http://micromagnum.informatik.uni-hamburg.de/micromagnum/gettingstarted</a></p>
+<p>If you successfully followed the installation instructions you are now ready to start your first micromagnetic simulations with magnum.fd.
+This tutorial will take you step by step through the simulation of the standard problem #4.</p>
+<div class="section" id="create-a-python-script">
+<h2>Create a Python Script<a class="headerlink" href="#create-a-python-script" title="Permalink to this headline">¶</a></h2>
+<p>magnum.fd is a Python module. That means that all the functionality of magnum.fd is accessed by writing Python scripts or by using the Python console.
+Open the text editor of your choice and create an empty text file named sp4.py.
+Every simulation script will start with the import of the magnum.fd module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">magnum</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>This line makes the classes and functions of magnum.fd accessible in the script file.</p>
+</div>
+<div class="section" id="the-world">
+<h2>The World<a class="headerlink" href="#the-world" title="Permalink to this headline">¶</a></h2>
+<p>Every micromagnetic simulation takes place in a virtual world.
+This world has a certain size and spatial discretization and it contains certain bodies.
+The size and discretization of the world is defined by a mesh object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mesh</span> <span class="o">=</span> <span class="n">RectangularMesh</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">5e-9</span><span class="p">,</span> <span class="mf">5e-9</span><span class="p">,</span> <span class="mf">3e-9</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>For the standard problem #4 we use a rectangular mesh, which is initialized by a tuple of cell numbers (100, 25, 1) and a tuple of cells sizes (5e-9, 5e-9, 3e-9).
+Now we have to define at least one body of magnetic material we want to simulate.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">body</span> <span class="o">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="n">Material</span><span class="o">.</span><span class="n">Py</span><span class="p">(),</span> <span class="n">Everywhere</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>To create a new body we have to define a name (&#8220;all&#8221;), a material (Material.Py()) and a shape of the body (Everywhere()).
+In this case we created a permalloy body which fills the whole area defined by the mesh. Now we are ready to create our virtual world.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">world</span> <span class="o">=</span> <span class="n">World</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A world is created by supplying a mesh and at least one body.</p>
+</div>
+<div class="section" id="the-solver">
+<h2>The solver<a class="headerlink" href="#the-solver" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have a virtual world with bodies in it we want to breathe some life into it. This is where the solver comes in.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">solver</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">world</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first step to the solution of the standard problem #4 is the creation of an S-state in our sample. To create an S-state we start with a simple analytical expression for this configuration and use the solver to relax this configuration at the energetical minimum.</p>
+<p>In order to initialize the magnetization of our sample we define a method that returns the values of our analytical expression.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
+
+<span class="k">def</span> <span class="nf">state0</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">field</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="k">return</span> <span class="mf">8e5</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="mf">8e5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Now we initialize the magnetization in our solver.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">state0</span>
+</pre></div>
+</div>
+<p>The only thing that is left to do is to tell the solver to relax the state which is done by a simple call to the solve function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">condition</span><span class="o">.</span><span class="n">Relaxed</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The solve method computes the time evolution of the system and stops when the termination condition is true. Since the relaxation of a system is a very common task, magnum.fd defines a shorthand for this call.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">solver</span><span class="o">.</span><span class="n">relax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="applying-a-field-and-saving-the-results">
+<h2>Applying a Field and Saving the Results<a class="headerlink" href="#applying-a-field-and-saving-the-results" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have produced an S-state we want to apply an external field as defined by the standard problem.</p>
+<p>In order to use the relaxed state as initial state of a simulation we first save it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s_state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span>
+</pre></div>
+</div>
+<p>Then we create a new solver, set the S-state as initial state and add an external field to the solver</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">solver</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="p">[</span><span class="n">StrayField</span><span class="p">,</span> <span class="n">ExchangeField</span><span class="p">,</span> <span class="n">ExternalField</span><span class="p">])</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">s_state</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">H_ext_offs</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">24.6e-3</span><span class="o">/</span><span class="n">MU0</span><span class="p">,</span> <span class="o">+</span><span class="mf">4.3e-3</span><span class="o">/</span><span class="n">MU0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next we have to add step handlers to the solver that store our simulation results to the harddisk.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">solver</span><span class="o">.</span><span class="n">addStepHandler</span><span class="p">(</span><span class="n">DataTableLog</span><span class="p">(</span><span class="s">&quot;sp4_1.odt&quot;</span><span class="p">),</span> <span class="n">condition</span><span class="o">.</span><span class="n">EveryNthStep</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>and start the engines</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">condition</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="mf">1.0e-9</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="putting-the-whole-thing-together">
+<h2>Putting the Whole Thing Together<a class="headerlink" href="#putting-the-whole-thing-together" title="Permalink to this headline">¶</a></h2>
+<p>And here is the resulting magnum.fd script.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">magnum</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
+
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">RectangularMesh</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">5e-9</span><span class="p">,</span> <span class="mf">5e-9</span><span class="p">,</span> <span class="mf">3e-9</span><span class="p">))</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">Body</span><span class="p">(</span><span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="n">Material</span><span class="o">.</span><span class="n">Py</span><span class="p">(),</span> <span class="n">Everywhere</span><span class="p">())</span>
+<span class="n">world</span> <span class="o">=</span> <span class="n">World</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+
+<span class="c"># Relax to S-state</span>
+<span class="k">def</span> <span class="nf">state0</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">field</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="k">return</span> <span class="mf">8e5</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="mf">8e5</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="mi">0</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="p">[</span><span class="n">StrayField</span><span class="p">,</span> <span class="n">ExchangeField</span><span class="p">],</span> <span class="n">log</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">do_precess</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">evolver</span><span class="o">=</span><span class="s">&quot;rkf45&quot;</span><span class="p">,</span> <span class="n">eps_abs</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">eps_rel</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">state0</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">relax</span><span class="p">()</span>
+
+<span class="c"># Set external field and compute the time evolution</span>
+<span class="n">s_state</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">create_solver</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="p">[</span><span class="n">StrayField</span><span class="p">,</span> <span class="n">ExchangeField</span><span class="p">,</span> <span class="n">ExternalField</span><span class="p">])</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="n">s_state</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">H_ext_offs</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">24.6e-3</span><span class="o">/</span><span class="n">MU0</span><span class="p">,</span> <span class="o">+</span><span class="mf">4.3e-3</span><span class="o">/</span><span class="n">MU0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">addStepHandler</span><span class="p">(</span><span class="n">DataTableLog</span><span class="p">(</span><span class="s">&quot;sp4_1.odt&quot;</span><span class="p">),</span> <span class="n">condition</span><span class="o">.</span><span class="n">EveryNthStep</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">condition</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="mf">1.0e-9</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>You can run it by simply calling it with the python interpreter:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python sp4.py
+</pre></div>
+</div>
+<p>A more sophisticated version of the standard problem #4 can be found in the examples of Micromagnum.</p>
+</div>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-word-on-materials-and-shapes">
+<h3>A Word on Materials and Shapes<a class="headerlink" href="#a-word-on-materials-and-shapes" title="Permalink to this headline">¶</a></h3>
+<p>magnum.fd offers a set of predefined materials such as permalloy (Material.Py()) and cobalt (Material.Co()).
+However if the desired material is not in the database you can easily define your own material.
+magnum.fd offers you two ways to define your own material.</p>
+<p>Modify an existing Material:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">py_with_high_damping</span> <span class="o">=</span> <span class="n">Material</span><span class="o">.</span><span class="n">Py</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create your own Material:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">my_material</span> <span class="o">=</span> <span class="n">Material</span><span class="p">({</span>
+    <span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="s">&#39;my_material&#39;</span><span class="p">,</span>
+    <span class="s">&#39;Ms&#39;</span><span class="p">:</span> <span class="mf">500e3</span><span class="p">,</span>
+    <span class="s">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s">&#39;A&#39;</span><span class="p">:</span> <span class="mf">30e-12</span><span class="p">,</span>
+    <span class="s">&#39;axis1&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="s">&#39;axis2&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+    <span class="s">&#39;k_uniaxial&#39;</span><span class="p">:</span> <span class="mf">400e3</span><span class="p">,</span>
+    <span class="s">&#39;k_cubic&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>If you omit the shape argument at the creation of a new body, magnum.fd uses the Everywhere shape by default.
+This shape fills the whole space defined by the mesh.
+Beside this most simple shape magnum.fd offers a variety of more sophisticated shapes including cuboids, cylinders and shapes defined by images.</p>
+</div>
+<div class="section" id="output-stephandlers">
+<h3>Output / Stephandlers<a class="headerlink" href="#output-stephandlers" title="Permalink to this headline">¶</a></h3>
+<p>Although magnum.fd has a minimalistic GUI to show you the progress of your simulation.
+What you really want to do is to safe your simulation results on harddisk to analyse them with a post processing tool.
+magnum.fd supports the following file formats:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>ODT</dt>
+<dd><p class="first last">A simple CSV format for the storage of scalar simulation data like the average magnetization over time</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>OMF</dt>
+<dd><p class="first last">A file format for the storage of the magnetization configuration compatible to OOMMF</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>VTK</dt>
+<dd><p class="first last">A file format for the storage of the magnetization configuration compatible to VTK software like ParaView</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>To save certain magnetization configurations like the result of the relaxation in the section above you can simply call the magnum.fd storage methods with the field of interest.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># write the current magnetization to an OMF file</span>
+<span class="n">writeOMF</span><span class="p">(</span><span class="s">&quot;filename.omf&quot;</span><span class="p">,</span> <span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+
+<span class="c"># write the current magnetization to a VTK file</span>
+<span class="n">writeVTK</span><span class="p">(</span><span class="s">&quot;filename.vtk&quot;</span><span class="p">,</span> <span class="n">solver</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">M</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want to save data along the simulation to get information of the time evolution of the system you can add step handlers to the solver instance.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Save the field as ODT every 10th integration step</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">addStepHandler</span><span class="p">(</span>
+    <span class="n">DataTableLog</span><span class="p">(</span><span class="s">&quot;odtdata.odt&quot;</span><span class="p">),</span>
+    <span class="n">condition</span><span class="o">.</span><span class="n">EveryNthStep</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c"># Save the field as VTK every 10th integration step in a subfolder(here:&quot;vtk&quot;)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">addStepHandler</span><span class="p">(</span>
+    <span class="n">VTKStorage</span><span class="p">(</span><span class="s">&quot;vtk&quot;</span><span class="p">,</span> <span class="s">&quot;M&quot;</span><span class="p">),</span>
+    <span class="n">condition</span><span class="o">.</span><span class="n">EveryNthStep</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The second argument of the addStepHandler function takes a condition. The step handler is only executed if this condition is true.</p>
+</div>
+</div>
 </div>
 
 

@@ -5,8 +5,8 @@
 
 .. image:: /figures/logo.svg
 
-Welcome to magnum.fd' documentation!
-====================================
+Welcome to magnum.fd's documentation!
+=====================================
 magnum.fd is a finite-difference/FFT package for the solution of dynamical micromagnetic problems. It is written in Python, C++ and Cuda C and runs on CPU as well as GPU.
 
 Download
