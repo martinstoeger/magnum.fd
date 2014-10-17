@@ -59,7 +59,8 @@ class Configuration(object):
         return [
             "---------------------------------------------------------------------",
             self.version,
-            "Copyright (C) 2012, 2013 by the magnum.fd team.",
+            "Copyright (C) 2012-2014 by the MicroMagnum team.",
+            "Copyright (C) 2014 by the magnum.fd team.",
             "This program comes with ABSOLUTELY NO WARRANTY.",
             "This is free software, and you are welcome to redistribute it under",
             "certain conditions; see the file COPYING in the distribution package.",
@@ -69,7 +70,7 @@ class Configuration(object):
     @property
     def version(self):
         import magnum
-        return "magnum.de" + magnum.__version__
+        return "magnum.fd " + magnum.__version__
 
     def enableCuda(self, mode, device=-1):
         return magneto.enableCuda(mode, device)
