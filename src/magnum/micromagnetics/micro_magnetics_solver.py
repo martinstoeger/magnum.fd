@@ -48,6 +48,9 @@ class MicroMagneticsSolver(solver.Solver):
         return self.solve(solver.condition.Relaxed(*args, **kwargs))
 
     def minimize(self, max_dpns = 0.01, samples = 10, h_max = 1e-5, h_min = 1e-16):
+        """
+        Minimizes the energy with a direct minimization strategy.
+        """
         # TODO make use of stephandlers for logging
         h        = self.state.h
         dpnslist = []
