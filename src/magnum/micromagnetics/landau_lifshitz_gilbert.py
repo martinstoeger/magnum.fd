@@ -35,7 +35,7 @@ class LandauLifshitzGilbert(module.Module):
         self.__valid_factors = False
 
     def calculates(self):
-        return ["dMdt", "M", "H_tot", "E_tot", "deg_per_ns", "minimizer_M", "minimizer_dM"]
+        return ["dMdt", "M", "H_tot", "E_tot", "E_minimize_BB", "deg_per_ns", "minimizer_M", "minimizer_dM", "minimizer_dM_minimize_BB"]
 
     def updates(self):
         return ["M"]
@@ -77,6 +77,8 @@ class LandauLifshitzGilbert(module.Module):
             return self.calculate_H_tot(state)
         elif id == "E_tot":
             return self.calculate_E_tot(state)
+        elif id == "E_minimize_BB":                            #eingefuegt
+            return self.calculate_E_minimize_BB(state)
         elif id == "dMdt":
             return self.calculate_dMdt(state)
         elif id == "deg_per_ns":
@@ -85,6 +87,8 @@ class LandauLifshitzGilbert(module.Module):
             return lambda h: self.calculate_minimizer_M(state, h)
         elif id == "minimizer_dM":
             return self.calculate_minimizer_dM(state)
+        elif id == "minimizer_dM_minimize_BB":
+            return self.calculate_minimizer_dM_minimize_BB(state)
         else:
             raise KeyError(id)
 
@@ -111,6 +115,11 @@ class LandauLifshitzGilbert(module.Module):
     def calculate_E_tot(self, state):
         if hasattr(state.cache, "E_tot"): return state.cache.E_tot
         state.cache.E_tot = sum(getattr(state, E_id) for E_id in self.field_energies)  # calculate sum of all registered energy terms
+        return state.cache.E_tot
+
+    def calculate_E_minimize_BB(self, state):
+        if hasattr(state.cache, "E_tot"): return state.cache.E_tot
+        state.cache.E_tot = sum(getattr(state, E_id) for E_id in self.field_energies)*1.e28 #calculate sum of all registered energy terms
         return state.cache.E_tot
 
     def calculate_dMdt(self, state):
@@ -148,7 +157,27 @@ class LandauLifshitzGilbert(module.Module):
         zero.fill(0.0)
 
         magneto.llge(zero, self.__f2, state.M, H_tot, result)
+        return result
 
+
+    def calculate_minimizer_dM_minimize_BB(self, state):
+        # TODO other LLG terms?
+        if not self.__valid_factors: self.__initFactors()
+
+        if hasattr(state.cache, "minimizer_dM_minimize_BB"): return state.cache.minimizer_dM_minimize_BB
+        result = state.cache.minimizer_dM_minimize_BB = VectorField(self.system.mesh)
+
+        # Get effective field
+        H_tot = self.calculate_H_tot(state)
+
+        # TODO do this in every step?
+        zero = Field(self.system.mesh)
+        zero.fill(0.0)
+
+        # changed; set llge coefficient to 1.0 for minimization
+        factor = Field(self.system.mesh)
+        factor.fill(1.)
+        magneto.llge(zero, factor, state.M, H_tot, result)
         return result
 
     def calculate_minimizer_M(self, state, h):
